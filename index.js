@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 //Routes
-const routes = require("./routes/signup");
+const routes = require("./routes/application");
 app.use("/", routes);
 //server setup
 app.listen(PORT, () => {
