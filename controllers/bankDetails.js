@@ -7,15 +7,17 @@ exports.bankDetails = async (req, res) => {
     const { document } = req.files;
     if (!lendingModule || !NetBanking || !DebitCard || !document)
       throw new Error("Fields marked with * are required");
-    const uploadedDocument = cloudinary.uploader.upload(document.tempFilePath, {
-      folder: "Varlyq",
-    });
-    redisClient = await redisClient();
+    const uploadedDocument = await cloudinary.uploader.upload(
+      document.tempFilePath,
+      {
+        folder: "Varlyq",
+      }
+    );
     redisClient.set(`${id}:lendingModule`, lendingModule);
     redisClient.set(`${id}:NetBanking`, NetBanking);
     redisClient.set(`${id}:DebitCard`, DebitCard);
     redisClient.set(`${id}:BankName`, BankName);
-    redisClient.set(`${id}:document`, (await uploadedDocument).secure_url);
+    redisClient.set(`${id}:document`, uploadedDocument.secure_url);
     res
       .status(200)
       .json({ success: true, message: "Bank details saved on redis" });

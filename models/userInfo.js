@@ -62,7 +62,7 @@ const userSchema = new mongoose.Schema({
       required: [true, "Mobile number is required"],
       minlength: [6, "Mobile number can't be less than 6 characters"],
     },
-    aadharNumber: {
+    aadhar: {
       image: {
         type: String,
         secure_url: String,
@@ -109,13 +109,11 @@ const userSchema = new mongoose.Schema({
   bankStatement: {
     type: String,
     secure_url: String,
-
     required: [true, "Bank Statement is required"],
   },
   prescription: {
     type: String,
     secure_url: String,
-
     required: [true, "Prescription is required"],
   },
   BankDetails: {

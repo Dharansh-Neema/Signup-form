@@ -16,12 +16,23 @@ exports.signupBasicInfo = async (req, res) => {
       AgentName,
       AgentMobile,
     } = req.body;
+    if (
+      !patientName ||
+      !patientEmail ||
+      !patientMobile ||
+      !PHname ||
+      !PHemail ||
+      !PHMobile ||
+      !AgentName ||
+      !AgentMobile
+    )
+      throw new Error("All the fields of basic info are required");
+
+    //creating unique id
     const id = uuidv4();
     console.log(id);
-    // redisClient.on("error", (err) => {
-    //   console.error("Redis client error", err);
-    // });
-    redisClient = await redisClient();
+
+    //Setting data into redis
     redisClient.set(`${id}:patientName`, patientName);
     redisClient.set(`${id}:patientEmail`, patientEmail);
     redisClient.set(`${id}:patientMobile`, patientMobile);
@@ -31,7 +42,6 @@ exports.signupBasicInfo = async (req, res) => {
     redisClient.set(`${id}:AgentName`, AgentName);
     redisClient.set(`${id}:AgentMobile`, AgentMobile);
 
-    console.log(response);
     let options = { maxAge: 1000 * 60 * 60 * 24, httpOnly: true };
     res.status(200).cookie("id", id, options).json({
       success: true,

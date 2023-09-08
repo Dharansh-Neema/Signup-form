@@ -72,7 +72,7 @@ exports.documentUpload = async (req, res) => {
     );
 
     //Storing the data using redis
-    redisClient = await redisClient();
+
     redisClient.set(`${id}:patientAadharNo`, patientAadharNo);
     redisClient.set(
       `${id}:patientAadharCard`,
